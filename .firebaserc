@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "entryexitapp": {
+      "hosting": {
+        "entryExitApp": [
+          "entryexitapp"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "entryexitapp"
+  }
+}

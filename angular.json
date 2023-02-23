@@ -95,6 +95,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "entryExitApp:build:production",
+            "firebaseProject": "entryexitapp",
+            "firebaseHostingSite": "entryexitapp"
+          }
         }
       }
     }
