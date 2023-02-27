@@ -32,6 +32,7 @@ export class AuthService {
       email,
       password
     );
+    console.table(userCredential);
     return userCredential;
   }
 
