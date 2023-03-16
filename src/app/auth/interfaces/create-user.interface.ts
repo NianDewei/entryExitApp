@@ -2,6 +2,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { User } from './user.interface';
 
 export interface CreateUser extends Omit<User, 'uid'> {
+  name: string;
   password: string;
 }
 
