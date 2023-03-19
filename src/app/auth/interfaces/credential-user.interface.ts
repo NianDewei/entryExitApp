@@ -1,6 +1,6 @@
 import { FormGroup, FormControl } from '@angular/forms';
-import { User } from './user.interface';
-export interface Credential extends Omit<User, 'uid' | 'name'> {
+import { IUser } from './user.interface';
+export interface Credential extends Omit<IUser, 'uid' | 'name'> {
   password: string;
 }
 

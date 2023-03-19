@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { FormLoginUser } from '../../interfaces/credential-user.interface';
 // Ngrx
@@ -53,38 +52,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this._store.dispatch(ui.isLoading());
-    // Swal.fire({
-    //   title: 'Accediendo...',
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    // });
 
     this._authService
       .signInUser(this.loginForm.getRawValue())
       .then((user) => {
         this._store.dispatch(ui.stopLoading());
-        // Swal.close();
         this._router.navigate(['/']);
       })
       .catch((err) => {
-        // Swal.close();
         this._store.dispatch(ui.stopLoading());
         if (err.code != 'auth/user-not-found') {
-          Swal.fire({
-            icon: 'error',
-            title: '',
-            text: err.code,
-          });
+          console.log('Hubo un error: ', err.code);
           return;
         }
 
-        Swal.fire({
-          icon: 'warning',
-          title: 'Aviso',
-          text: 'Correo y/o contraseña incorrecta.',
-          confirmButtonColor: '#007bff',
-        });
+        console.log('usuario ya existe');
         this.loginForm.reset();
       });
   }

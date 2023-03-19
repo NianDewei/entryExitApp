@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 
-import Swal from 'sweetalert2';
 import { FormRegisterUser } from '../../interfaces/create-user.interface';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
@@ -52,39 +51,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.registerForm.invalid) {
       return;
     }
+
     this._store.dispatch(ui.isLoading());
-    // Swal.fire({
-    //   title: 'Espere por favor',
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    // });
 
     this._authService
       .createUser(this.registerForm.getRawValue())
       .then((credential) => {
         this._store.dispatch(ui.stopLoading());
-        // Swal.close();
         this._router.navigate(['/']);
       })
       .catch((err) => {
         this._store.dispatch(ui.stopLoading());
-        // Swal.close();
+
         if (err.code != 'auth/email-already-in-use') {
-          Swal.fire({
-            icon: 'error',
-            title: '',
-            text: err.code,
-          });
+          console.log('Hubo un error: ', err.code);
           return;
         }
-
-        Swal.fire({
-          icon: 'warning',
-          title: 'Hola ' + this.registerForm.getRawValue().name,
-          text: 'El correo que quieres registar, ya esta en uso.',
-          confirmButtonColor: '#007bff',
-        });
+        console.log('Este correo ya existe');
         this.registerForm.get('email')?.reset('');
       });
   }
