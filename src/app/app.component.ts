@@ -7,9 +7,9 @@ import { AuthService } from './auth/services/auth.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private _authService: AuthService) {}
-
-  ngOnInit(): void {
+  constructor(private _authService: AuthService) {
     this._authService.initAuthListener();
   }
+
+  ngOnInit(): void {}
 }
