@@ -4,7 +4,6 @@ import firebase from 'firebase/compat';
 import 'firebase/firestore';
 import {
   AngularFirestore,
-  DocumentChangeAction,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
 
@@ -52,5 +51,12 @@ export class EntryExitService {
           }))
         )
       );
+  }
+
+  deleteExtryExitBy(uidItem: string): Promise<void> {
+    const uid = this._authService.user?.uid;
+    const path = `${uid}/entry-exit/items/${uidItem}`;
+
+    return this._fireStore.doc(path).delete();
   }
 }

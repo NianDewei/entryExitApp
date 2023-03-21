@@ -5,6 +5,7 @@ import { AppState } from '../../../app.reducer';
 
 import { EntryExit } from '../../interfaces/entry-exit';
 import { Subscription } from 'rxjs';
+import { EntryExitService } from '../../services/entry-exit.service';
 
 @Component({
   selector: 'app-detail',
@@ -18,7 +19,7 @@ import { Subscription } from 'rxjs';
       }
 
       .fw-500 {
-        font-weight: 500
+        font-weight: 500;
       }
     `,
   ],
@@ -26,7 +27,11 @@ import { Subscription } from 'rxjs';
 export class DetailComponent implements OnInit, OnDestroy {
   items: Array<EntryExit> = [];
   itemsSubs!: Subscription;
-  constructor(private _store: Store<AppState>) {}
+  success: boolean = false;
+  constructor(
+    private _store: Store<AppState>,
+    private _entryExitService: EntryExitService
+  ) {}
 
   ngOnInit(): void {
     this.itemsSubs = this._store
@@ -41,11 +46,17 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   //! methods
-  delete(uid: string) {
-    console.log(uid);
+  delete(uidItem: string) {
+    this._entryExitService
+      .deleteExtryExitBy(uidItem)
+      .then((res) => (this.success = true));
   }
 
   itemTrackBy(i: number, item: EntryExit) {
     return item.uid;
+  }
+
+  close() {
+    this.success = false;
   }
 }
