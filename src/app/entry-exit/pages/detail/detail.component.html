@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title">Detalle de ingreso egreso</h4>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Tipo</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ng-container *ngIf="items.length > 0; else empty">
+              <tr *ngFor="let item of items; index as i; trackBy: itemTrackBy">
+                <td>{{ item.description | titlecase }}</td>
+                <td>{{ item.amount | currency : "S/ " }}</td>
+                <td
+                  class="fw-500"
+                  [ngClass]="{
+                    'text-success': item.type == 'entry',
+                    'text-warning': item.type == 'exit'
+                  }"
+                >
+                  {{ item.type | titlecase }}
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    title="delete"
+                    (click)="delete(item.uid)"
+                    class="btn btn-xs btn-outline-danger text-center px-2 py-sm-1 rounded font-weight-light fs-11px"
+                  >
+                    <i class="fa fa-trash"></i>delete
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+
+            <ng-template #empty>
+              <tr>
+                <td colspan="3" class="text-center">Vacio</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

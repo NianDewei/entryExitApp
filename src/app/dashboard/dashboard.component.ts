@@ -1,7 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.reducer';
+
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
+import { EntryExitService } from '../entry-exit/services/entry-exit.service';
+import * as entryExitActions from '../entry-exit/store/entry-exit.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +19,34 @@ import { SharedModule } from '../shared/shared.module';
   styles: [],
   imports: [CommonModule, RouterModule, SharedModule],
 })
-export class DashboardComponent implements OnInit {
-  constructor() {}
+export class DashboardComponent implements OnInit, OnDestroy {
+  userActiveSub!: Subscription;
+  entryExitSub!: Subscription;
+  constructor(
+    private _store: Store<AppState>,
+    private _entryExitService: EntryExitService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userActiveSub = this._store
+      .select('auth')
+      .pipe(filter((auth) => auth?.user != null))
+      .subscribe(
+        ({ user }) =>
+          (this.entryExitSub = this._entryExitService
+            .initEntryExitListener({ uid: user!.uid })
+            .subscribe((items) =>
+              this._store.dispatch(entryExitActions.setItems({ items: items }))
+            ))
+      );
+  }
+
+  ngOnDestroy(): void {
+    if (this.userActiveSub) {
+      this.userActiveSub.unsubscribe();
+    }
+    if (this.entryExitSub) {
+      this.entryExitSub.unsubscribe();
+    }
+  }
 }
