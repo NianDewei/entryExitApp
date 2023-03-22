@@ -32,8 +32,8 @@ export class EntryExitComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.entryForm = this._fb.nonNullable.group({
       description: ['', Validators.required],
-      amount: [{} as number, [Validators.required, Validators.min(1)]],
-      type: [this.type, Validators.required],
+      amount: [1, [Validators.required, Validators.min(1)]],
+      type: ['entry', Validators.required],
     });
 
     this._store
