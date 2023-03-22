@@ -6,11 +6,12 @@ import { AppState } from '../../../app.reducer';
 import { EntryExit } from '../../interfaces/entry-exit';
 import { Subscription } from 'rxjs';
 import { EntryExitService } from '../../services/entry-exit.service';
+import { OrderEntryPipe } from '../../pipes/order-entry.pipe';
 
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, OrderEntryPipe],
   templateUrl: './detail.component.html',
   styles: [
     `
