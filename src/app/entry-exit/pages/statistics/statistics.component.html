@@ -1,45 +1,94 @@
 <div class="row">
   <div class="col-6">
-      <div class="card card-statistics">
-        <div class="card-body">
-
-          <div class="clearfix">
-            <div class="float-left">
-              <i class="fa fa-money-bill-alt text-success icon-lg"></i>
-            </div>
-            <div class="float-right">
-              <p class="mb-0 text-right">Ingresos</p>
-              <div class="fluid-container">
-                <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
-              </div>
+    <div class="card card-statistics">
+      <div class="card-body">
+        <div class="clearfix">
+          <div class="float-left">
+            <i class="fa fa-money-bill-alt text-success icon-lg"></i>
+          </div>
+          <div class="float-right">
+            <p class="mb-0 text-right">Entry</p>
+            <div class="fluid-container">
+              <h3 class="font-weight-medium text-right mb-0">
+                {{ totalEntry | currency : "S/ " }}
+              </h3>
             </div>
           </div>
-          <p class="text-muted mt-3 mb-0">
-            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
-          </p>
+        </div>
+        <p class="text-muted mt-3 mb-0">
+          <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i>
+          {{ entry }} Items
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card card-statistics">
+      <div class="card-body">
+        <div class="clearfix">
+          <div class="float-left">
+            <i class="fa fa-shipping-fast text-danger icon-lg"></i>
+          </div>
+          <div class="float-right">
+            <p class="mb-0 text-right">Exit</p>
+            <div class="fluid-container">
+              <h3 class="font-weight-medium text-right mb-0">
+                {{ totalExit | currency : "S/ " }}
+              </h3>
+            </div>
+          </div>
+        </div>
+        <p class="text-muted mt-3 mb-0">
+          <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i>
+          {{ exit }} Items
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row m-5">
+  <div class="col-12">
+    <div class="card card-statistics">
+      <div class="card-body">
+        <div class="clearfix">
+          <div class="float-left">
+            <i class="fa fa-building text-info icon-lg"></i>
+          </div>
+          <div class="float-right">
+            <p class="mb-0 text-right">Difference</p>
+            <div class="fluid-container">
+              <h3
+                [ngClass]="{
+                  'text-success': entryIsGreaterThanExit,
+                  'text-danger': entryIsLessThanExit
+                }"
+                class="font-weight-medium text-right mb-0"
+              >
+                {{ difference | currency : " S/ " }}
+              </h3>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="col-6">
-        <div class="card card-statistics">
-          <div class="card-body">
-
-            <div class="clearfix">
-              <div class="float-left">
-                <i class="fa fa-shipping-fast text-danger icon-lg"></i>
-              </div>
-              <div class="float-right">
-                <p class="mb-0 text-right">Ingresos</p>
-                <div class="fluid-container">
-                  <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
-                </div>
-              </div>
-            </div>
-            <p class="text-muted mt-3 mb-0">
-              <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
-            </p>
-          </div>
+  <div class="col-12 p-5" *ngIf="entryExitIsGreaterThanZero">
+    <div class="card text-center align-items-center">
+      <div class="card-body">
+        <h1 class="card-title">statistical graph</h1>
+        <div class="d-block">
+          <canvas
+            baseChart
+            [data]="doughnutChartData"
+            type="doughnut"
+            [options]="doughnutChartOptions"
+          >
+          </canvas>
         </div>
       </div>
+    </div>
+  </div>
 </div>
