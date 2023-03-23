@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../auth/services/auth.service';
+
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',

@@ -16,7 +16,7 @@ import { User } from '../model/user.model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as authActions from '../store/auth.actions';
-import * as entryExitActions from 'src/app/entry-exit/store/entry-exit.actions';
+import * as entryExitActions from 'src/app/modules/entry-exit/store/entry-exit.actions';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
+import { AppState } from '../../../../app.reducer';
 import { EntryExitModel } from '../../model/entry-exit.model';
 
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 // Charts
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
+import { AppStateWithEntryExit } from '../../store/entry-exit.reducer';
 
 @Component({
   selector: 'app-statistics',
@@ -43,7 +44,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     responsive: true,
   };
 
-  constructor(private _store: Store<AppState>) {}
+  constructor(private _store: Store<AppStateWithEntryExit>) {}
 
   ngOnInit(): void {
     this.itemsSubs = this._store.select('entryExit').subscribe(({ items }) => {

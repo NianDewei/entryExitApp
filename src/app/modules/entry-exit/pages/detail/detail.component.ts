@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
+import { AppStateWithEntryExit } from '../../store/entry-exit.reducer';
 
 import { EntryExit } from '../../interfaces/entry-exit';
 import { Subscription } from 'rxjs';
@@ -30,7 +31,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   itemsSubs!: Subscription;
   success: boolean = false;
   constructor(
-    private _store: Store<AppState>,
+    private _store: Store<AppStateWithEntryExit>,
     private _entryExitService: EntryExitService
   ) {}
 

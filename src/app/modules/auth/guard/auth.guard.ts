@@ -9,7 +9,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -26,19 +26,11 @@ export class AuthGuard implements CanActivate, CanLoad {
     return this._check();
   }
 
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return true;
+  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
+    return this._check();
   }
 
   private _check(): Observable<boolean> {
-
     // Check the authentication status
     return this._authService.verifyIsAuth().pipe(
       switchMap((authenticated) => {
@@ -54,6 +46,18 @@ export class AuthGuard implements CanActivate, CanLoad {
         // Allow the access
         return of(true);
       })
+    );
+  }
+
+  private _checkLoad(): Observable<boolean> {
+    // Check the authentication status
+    return this._authService.verifyIsAuth().pipe(
+      tap((authenticated) => {
+        if (!authenticated) {
+          this._router.navigate(['/login']);
+        }
+      }),
+      take(1)
     );
   }
 }

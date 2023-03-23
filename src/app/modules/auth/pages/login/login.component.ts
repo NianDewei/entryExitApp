@@ -7,9 +7,10 @@ import { AuthService } from '../../services/auth.service';
 import { FormLoginUser } from '../../interfaces/credential-user.interface';
 // Ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
+
 import { Subscription } from 'rxjs';
 import * as ui from 'src/app/shared/ui.actions';
+import { AppState } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-login',

@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.reducer';
 
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 import { EntryExitService } from '../entry-exit/services/entry-exit.service';
 import * as entryExitActions from '../entry-exit/store/entry-exit.actions';
+import { AppState } from 'src/app/app.reducer';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-dashboard',

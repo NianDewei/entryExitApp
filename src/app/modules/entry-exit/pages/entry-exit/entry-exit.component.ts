@@ -6,9 +6,9 @@ import { EntryRegisterForm } from '../../interfaces/register-entry-exit';
 import { EntryExitService } from '../../services/entry-exit.service';
 // ngrx
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
+import { AppState } from '../../../../app.reducer';
 import { Subscription } from 'rxjs';
-import * as uiActions from '../../../shared/ui.actions';
+import * as uiActions from '../../../../shared/ui.actions';
 
 @Component({
   selector: 'app-entry-exit',
